@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 
 import './Schedule.scss';
@@ -10,32 +10,13 @@ function createBus(trips = []) {
   };
 }
 
-function shakeBuses(trips) {
-  const sortedTrips = trips.sort((a, b) => a.startTime - b.startTime);
-  const buses = [createBus()];
-
-  for (let i in sortedTrips) {
-    const curr = sortedTrips[i];
-    const prev = sortedTrips[i - 1] || { endTime: 0 };
-
-    if (curr.startTime < prev.endTime) {
-      buses.push(createBus());
-    }
-    const bus = buses[buses.length - 1];
-
-    bus.trips.push(curr);
-  };
-
-  return buses.sort((a, b) => a.id - b.id);
-}
-
 function makeBuses(trips) {
   return trips.map(trip => createBus([trip]));
 }
 
 
 function Schedule() {
-  const [trips, setTrips] = useState(schedulingData);
+  const [trips] = useState(schedulingData);
   const [activeTripId, setActiveTripId] = useState(null);
   const [busToTrips, setBusToTrips] = useState(makeBuses(trips));
   const [canGo, setCanGo] = useState(false);
@@ -97,7 +78,7 @@ function Schedule() {
             const time = theLastOne ? null : '';
 
             return (
-              <div className="Schedule__time-bus">
+              <div className="Schedule__time-bus" key={index}>
                 {theLastOne ? <b>New Bus</b> : <b>Bus {index}</b>}
                 {time && <time datetime={time}>{time}</time>}
               </div>
@@ -107,7 +88,7 @@ function Schedule() {
         <div className="Schedule__right">
           <div className="Schedule__header">
             {(new Array(10).fill('')).map((_, item) => (
-              <div className="Schedule__time">{item}:00</div>
+              <div className="Schedule__time" key={item}>{item}:00</div>
             ))}
           </div>
           {busToTrips.map((bus, index) => (
