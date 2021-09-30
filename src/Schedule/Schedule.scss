@@ -1,0 +1,92 @@
+.Schedule {
+  border: 1px solid #ccc;
+  
+  &__header {
+    display: flex;
+    padding: 10px 8px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &__time {
+    width: 60px; // e.g. 60min
+  }
+
+  &__container {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__left {
+    margin-top: 38px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  &__right {
+    width: 600px; 
+  }
+
+  &__time-bus {
+    display: flex;
+    height: 30px;
+    width: 180px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    border-bottom: 1px solid #ccc;
+
+    > b {
+      font-size: 16px;
+    }
+    
+    &:nth-child(2n + 1) {
+      background: #fafafa;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__bus {
+    position: relative;
+    display: flex;
+    height: 30px;
+    padding: 4px 8px;
+    border-bottom: 1px solid #ccc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &:nth-child(2n) {
+      background: #fafafa;
+    }
+  }
+
+  &__trip {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    z-index: 1;
+    display: block;
+    border: 1px solid #333;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    transform: scale(1, 1);
+    transition: 400ms;
+
+    &:hover {
+      z-index: 2;
+      background: #e1e1e1;
+      transform: scale(1.1, 1.1);
+      box-shadow: 0 0 6px 1px #aaa;
+    }
+
+    &.active {
+      z-index: 2;
+      background: #ddd;
+    }
+  }
+}
+
